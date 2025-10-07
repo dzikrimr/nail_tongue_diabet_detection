@@ -72,7 +72,7 @@ class DiabetesPredictor:
         # Interpretasi hasil (sigmoid output)
         # prediction < 0.5 = diabet, >= 0.5 = non_diabet
         is_diabetic = confidence_score < 0.5
-        label = "diabet" if is_diabetic else "non_diabet"
+        label = "prediabet" if is_diabetic else "non_diabet"
         
         # Adjust confidence untuk interpretasi yang benar
         confidence = (1 - confidence_score) if is_diabetic else confidence_score
