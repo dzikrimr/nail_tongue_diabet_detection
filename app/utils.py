@@ -2,29 +2,28 @@ import random
 from typing import List
 from app.models import RiskLevel
 
-# Risk factors untuk setiap kondisi
 LIDAH_RISK_FACTORS = {
     "diabet": [
-        "Tongue coating thickness abnormality",
-        "Color changes in tongue surface",
-        "Texture pattern irregularities",
-        "Surface moisture level changes",
-        "Papillae distribution abnormality",
-        "Edge scalloping patterns detected"
+        "Kelainan ketebalan lapisan lidah",
+        "Perubahan warna pada permukaan lidah",
+        "Ketidakteraturan pola tekstur",
+        "Perubahan tingkat kelembapan permukaan",
+        "Kelainan distribusi papila",
+        "Terdeteksi pola tepi lidah bergelombang"
     ]
 }
 
 KUKU_RISK_FACTORS = {
     "prediabet": [
-        "Nail discoloration patterns",
-        "Texture irregularities detected",
-        "Surface changes observed",
-        "Yellow nail syndrome indicators",
-        "Nail bed color variations",
-        "Onycholysis early signs",
-        "Paronychia-like inflammation",
-        "Brittle nail characteristics",
-        "Growth pattern abnormalities"
+        "Pola perubahan warna kuku",
+        "Terdeteksi ketidakteraturan tekstur",
+        "Teramati perubahan pada permukaan",
+        "Indikator sindrom kuku kuning",
+        "Variasi warna dasar kuku",
+        "Tanda-tanda awal onikolisis",
+        "Peradangan mirip paronikia",
+        "Karakteristik kuku rapuh",
+        "Kelainan pola pertumbuhan"
     ]
 }
 
@@ -47,23 +46,20 @@ def get_risk_factors(lidah_diabetic: bool, kuku_diabetic: bool) -> List[str]:
     if kuku_diabetic:
         factors.extend(KUKU_RISK_FACTORS["prediabet"])
     
-    # Jika tidak ada yang terdeteksi, return list kosong atau faktor umum
     if not factors:
         return [
-            "No significant abnormalities detected",
-            "Normal appearance observed",
-            "Healthy indicators present"
+            "Tidak ada kelainan signifikan yang terdeteksi",
+            "Penampilan normal teramati",
+            "Terdapat indikator kesehatan"
         ]
-    
-    # Ambil 3 faktor secara random jika lebih dari 3
+
     if len(factors) > 3:
         factors = random.sample(factors, 3)
     elif len(factors) < 3:
-        # Jika kurang dari 3, tambahkan faktor umum
         general_factors = [
-            "Possible early stage indicators",
-            "Minor variations from baseline",
-            "Requires further monitoring"
+            "Kemungkinan indikator tahap awal",
+            "Variasi kecil dari kondisi normal",
+            "Memerlukan pemantauan lebih lanjut"
         ]
         factors.extend(general_factors[:3 - len(factors)])
     
@@ -102,20 +98,20 @@ def get_recommendation(risk_level: RiskLevel) -> str:
     """
     recommendations = {
         RiskLevel.TINGGI: (
-            "High risk detected. We strongly recommend immediate consultation with a healthcare "
-            "professional for comprehensive diabetes screening and blood glucose testing. "
-            "Early intervention is crucial for better health outcomes."
+            "Risiko tinggi terdeteksi. Kami sangat merekomendasikan untuk segera berkonsultasi "
+            "dengan tenaga kesehatan profesional untuk skrining diabetes komprehensif dan tes glukosa darah. "
+            "Intervensi dini sangat penting untuk hasil kesehatan yang lebih baik."
         ),
         RiskLevel.SEDANG: (
-            "Moderate risk detected. Please schedule a medical check-up within the next few weeks. "
-            "Consider monitoring your blood sugar levels and maintaining a healthy lifestyle with "
-            "balanced diet and regular exercise."
+            "Risiko sedang terdeteksi. Harap jadwalkan pemeriksaan medis dalam beberapa minggu ke depan. "
+            "Pertimbangkan untuk memantau kadar gula darah Anda dan menjaga gaya hidup sehat dengan "
+            "pola makan seimbang dan olahraga teratur."
         ),
         RiskLevel.RENDAH: (
-            "Low risk detected. Continue maintaining a healthy lifestyle with regular exercise, "
-            "balanced nutrition, and adequate sleep. Regular health check-ups are still recommended "
-            "for prevention and early detection."
+            "Risiko rendah terdeteksi. Lanjutkan menjaga gaya hidup sehat dengan olahraga teratur, "
+            "nutrisi seimbang, dan tidur yang cukup. Pemeriksaan kesehatan rutin tetap disarankan "
+            "untuk pencegahan dan deteksi dini."
         )
     }
     
-    return recommendations.get(risk_level, "Please consult with a healthcare professional.")
+    return recommendations.get(risk_level, "Silakan berkonsultasi dengan tenaga kesehatan profesional.")
